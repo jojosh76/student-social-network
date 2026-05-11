@@ -1,0 +1,30 @@
+/* Import des bases identiques au login */
+@import url('login.css');
+
+.register-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.row { display: flex; gap: 15px; }
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #eee;
+    background: white;
+}
+
+.btn-reg {
+    width: 100%;
+    padding: 15px;
+    background: #2ecc71; /* Vert pour l'inscription */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
