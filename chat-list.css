@@ -1,0 +1,27 @@
+:root {
+    --messenger-blue: #0084ff;
+    --bg-gray: #f5f6f7;
+    --hover-gray: #e4e6eb;
+}
+
+body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: white; }
+
+.sidebar { width: 360px; height: 100vh; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+.sidebar-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+.sidebar-header h2 { font-size: 24px; font-weight: 800; }
+
+.search-bar { margin: 0 15px 10px; background: var(--bg-gray); border-radius: 20px; padding: 10px 15px; display: flex; align-items: center; }
+.search-bar input { background: transparent; border: none; outline: none; margin-left: 10px; width: 100%; }
+
+.conversation-item { 
+    display: flex; align-items: center; padding: 10px 15px; cursor: pointer; border-radius: 10px; margin: 0 8px; transition: 0.2s;
+}
+.conversation-item:hover { background: var(--hover-gray); }
+
+.avatar { width: 56px; height: 56px; border-radius: 50%; background: #ccc; margin-right: 12px; position: relative; }
+.online-dot { width: 14px; height: 14px; background: #31a24c; border: 2px solid white; border-radius: 50%; position: absolute; bottom: 2px; right: 2px; }
+
+.info { flex: 1; }
+.info .top-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.info h4 { margin: 0; font-size: 15px; font-weight: 600; }
+.info p { margin: 0; font-size: 13px; color: #65676b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
