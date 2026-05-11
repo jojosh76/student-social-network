@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat | StudNet</title>
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="chat-screen">
+        <header class="chat-header">
+            <div class="user-meta">
+                <a href="chat-list.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+                <div class="avatar-small">JD</div>
+                <div class="status">
+                    <h4>Jean Dupont</h4>
+                    <span>En ligne il y a 5 min</span>
+                </div>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-phone"></i>
+                <i class="fas fa-video"></i>
+                <i class="fas fa-info-circle"></i>
+            </div>
+        </header>
+
+        <div id="messageDisplay" class="messages-area">
+            <div class="msg received">Salut ! Tu as avancé sur StudNet ?</div>
+            <div class="msg sent">Oui, je suis en train de coder la messagerie là !</div>
+        </div>
+
+        <footer class="input-container">
+            <div class="tool-icons">
+                <input type="file" id="imageInput" hidden>
+                <i class="fas fa-plus-circle" onclick="document.getElementById('imageInput').click()"></i>
+                <i class="fas fa-camera" id="cameraBtn"></i>
+                <i class="fas fa-image"></i>
+            </div>
+            <div class="input-wrapper">
+                <input type="text" id="msgContent" placeholder="Aa">
+                <i class="far fa-smile"></i>
+            </div>
+            <div class="actions">
+                <i class="fas fa-microphone" id="voiceBtn"></i>
+                <i class="fas fa-paper-plane" id="sendBtn"></i>
+            </div>
+        </footer>
+    </div>
+    <script src="chat.js"></script>
+</body>
+</html>

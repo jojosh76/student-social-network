@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos | StudNet</title>
+    <link rel="stylesheet" href="about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Stud<span>Net</span></div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Flux</a></li>
+            <li><a href="about.html" class="active">À Propos</a></li>
+            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>L'innovation au service de l'étudiant</h1>
+            <p>Découvrez l'équipe derrière la plateforme qui révolutionne la collaboration académique.</p>
+        </section>
+
+        <section class="bio-section">
+            <div class="bio-content">
+                <h2>Le Mot des Fondateurs</h2>
+                <div class="bio-card">
+                    <p>
+                        Nous sommes deux étudiants passionnés, actuellement en <strong>3ème année de Génie Logiciel</strong>. 
+                        Ce projet est le fruit de notre volonté de simplifier le quotidien sur le campus.
+                    </p>
+                    <div class="quote-box">
+                        <i class="fas fa-quote-left"></i>
+                        <p>
+                            Moi, <strong>[Ton Nom]</strong>, et mon coéquipier <strong>[Nom de ton partenaire]</strong>, 
+                            avons décidé de lancer <strong>StudNet</strong> parce que nous avons constaté que l'entraide 
+                            est souvent freinée par des outils trop complexes ou éparpillés.
+                        </p>
+                    </div>
+                    <p>
+                        Pour répondre à ce défi, nous avons misé sur une architecture <strong>SOA & Clean Architecture</strong>. 
+                        Notre objectif ? Garantir une plateforme robuste, capable d'évoluer avec les besoins des étudiants.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-rocket icon"></i>
+                <h3>Notre Mission</h3>
+                <p>Centraliser les ressources et dynamiser la vie de campus en temps réel via des services optimisés.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-code icon"></i>
+                <h3>Architecture</h3>
+                <p>Utilisation du pattern <strong>CQRS</strong> pour une séparation nette entre lecture et écriture de données.</p>
+            </div>
+        </div>
+
+        <section class="team-section">
+            <h2>L'équipe de développement</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="avatar-container">
+                        <img src="photo-admin.jpg" alt="[Ton Nom]" class="member-photo">
+                    </div>
+                    <h4>[Ton Nom]</h4>
+                    <p class="role">Étudiant L3 - Lead Architect</p>
+                    <div class="socials">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="avatar-container">
+                        <img src="photo-collab.jpg" alt="[Nom Partenaire]" class="member-photo">
+                    </div>
+                    <h4>[Nom du Partenaire]</h4>
+                    <p class="role">Étudiant L3 - Fullstack Dev</p>
+                    <div class="socials">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="about.js"></script>
+</body>
+</html>
