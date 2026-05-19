@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/events.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Événements — StudNet</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Stud<span>Net</span></div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Flux</a></li>
+            <li><a href="search.html">Rechercher</a></li>
+            <li>
+                <a href="chat-list.html">
+                    Messages <span id="msgBadge" class="badge hidden">0</span>
+                </a>
+            </li>
+            <li><a href="events.html" class="active">Événements</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="profile.html">Profil</a></li>
+            <li><a href="about.html">À Propos</a></li>
+            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <div class="layout">
+        <main class="events-page">
+            <header class="section-header card">
+                <div>
+                    <h1>Événements à venir</h1>
+                    <p>Ne manquez rien de la vie sur le campus</p>
+                </div>
+                <button class="btn-primary" id="createNewEvent">+ Créer un événement</button>
+            </header>
+
+            <nav class="event-filters">
+                <button class="filter-btn active" data-cat="all">Tous</button>
+                <button class="filter-btn" data-cat="academic">Académique</button>
+                <button class="filter-btn" data-cat="social">Social</button>
+                <button class="filter-btn" data-cat="sport">Sport</button>
+            </nav>
+
+            <div id="eventsGrid" class="events-grid">
+                </div>
+        </main>
+    </div>
+    <script src="assets/js/utils/auth.js"></script>
+    <script src="assets/js/adapters/events.adapter.js"></script>
+</body>
+</html>

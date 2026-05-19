@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Messages | StudNet</title>
-    <link rel="stylesheet" href="chat-list.css">
+    <link rel="stylesheet" href="assets/css/chat-list.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="logo">Stud<span>Net</span></div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Flux</a></li>
+            <li><a href="search.html">Rechercher</a></li>
+            <li>
+                <a href="chat-list.html" class="active">
+                    Messages <span id="msgBadge" class="badge hidden">0</span>
+                </a>
+            </li>
+            <li><a href="events.html">Événements</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="profile.html">Profil</a></li>
+            <li><a href="about.html">À Propos</a></li>
+            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -21,6 +40,7 @@
                 </div>
         </aside>
     </div>
-    <script src="chat-list.js"></script>
+    <script src="assets/js/utils/auth.js"></script>
+    <script src="assets/js/adapters/chat-list.adapter.js"></script>
 </body>
 </html>

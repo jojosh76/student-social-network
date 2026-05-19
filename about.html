@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>À Propos | StudNet</title>
-    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="assets/css/about.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,9 +13,19 @@
         <div class="logo">Stud<span>Net</span></div>
         <ul class="nav-links">
             <li><a href="dashboard.html">Flux</a></li>
+            <li><a href="search.html">Rechercher</a></li>
+            <li>
+                <a href="chat-list.html">
+                    Messages <span id="msgBadge" class="badge hidden">0</span>
+                </a>
+            </li>
+            <li><a href="events.html">Événements</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="profile.html">Profil</a></li>
             <li><a href="about.html" class="active">À Propos</a></li>
-            <li><a href="#" id="logoutBtn" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a></li>
+            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
     </nav>
 
     <main class="container">
@@ -91,6 +101,7 @@
         </section>
     </main>
 
-    <script src="about.js"></script>
+    <script src="assets/js/utils/auth.js"></script>
+    <script src="assets/js/adapters/about.adapter.js"></script>
 </body>
 </html>
