@@ -1,15 +1,3 @@
-/**
- * ╔══════════════════════════════════════════════════════════════════╗
- * ║           STUDNET — SERVICE REGISTRY (SOA)                       ║
- * ║  Répertoire central de tous les services de la plateforme        ║
- * ║  Pattern : Service Locator / Registry                            ║
- * ╚══════════════════════════════════════════════════════════════════╝
- *
- * Rôle : Source unique de vérité pour les URL de microservices.
- * Tous les adapters et services importent depuis ici.
- * En production, ce fichier peut être alimenté par un consul/etcd.
- */
-
 'use strict';
 
 /**
@@ -22,47 +10,47 @@
 /** @type {Record<string, ServiceDescriptor>} */
 const SERVICE_REGISTRY = {
     auth: {
-        url:     'http://localhost:3100/api/auth',
+        url:     'http://164.92.198.226:3100/api/auth',
         version: 'v1',
         routes:  ['POST /login', 'POST /register', 'GET /me'],
     },
     posts: {
-        url:     'http://localhost:3100/api/posts',
+        url:     'http://164.92.198.226:3100/api/posts',
         version: 'v1',
         routes:  ['GET /', 'POST /', 'GET /me', 'POST /:id/like'],
     },
     users: {
-        url:     'http://localhost:3100/api/users',
+        url:     'http://164.92.198.226:3100/api/users',
         version: 'v1',
         routes:  ['GET /me', 'GET /online', 'PATCH /update-avatar'],
     },
     events: {
-        url:     'http://localhost:3100/api/events',
+        url:     'http://164.92.198.226:3100/api/events',
         version: 'v1',
         routes:  ['GET /', 'GET /upcoming', 'POST /:id/join'],
     },
     messages: {
-        url:     'http://localhost:3100/api/conversations',
+        url:     'http://164.92.198.226:3100/api/conversations',
         version: 'v1',
         routes:  ['GET /', 'GET /unread-count'],
     },
     notifications: {
-        url:     'http://localhost:3100/api/notifications',
+        url:     'http://164.92.198.226:3100/api/notifications',
         version: 'v1',
         routes:  ['GET /', 'PATCH /:id/read', 'DELETE /:id'],
     },
     search: {
-        url:     'http://localhost:3100/api/search',
+        url:     'http://164.92.198.226:3100/api/search',
         version: 'v1',
         routes:  ['GET /?q=&type='],
     },
     files: {
-        url:     'http://localhost:3100/api/upload',
+        url:     'http://164.92.198.226:3100/api/upload',
         version: 'v1',
         routes:  ['POST /'],
     },
     chat: {
-        url:     'http://localhost:3100',
+        url:     'http://164.92.198.226:3100',
         wsPath:  '/chat',
         version: 'v1',
         routes:  ['WS /chat'],
