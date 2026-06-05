@@ -1,0 +1,4 @@
+            
+PS C:\Users\GSII\Documents\Campus-Link> npx http-server . -p 8080
+S C:\Users\GSII\Documents\Campus-Link\gateway> npm start
+ C:\Users\GSII\Documents\Campus-Link\services\auth> npm run dev   

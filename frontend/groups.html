@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupes — StudNet</title>
+    <link rel="stylesheet" href="assets/css/groups.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Stud<span>Net</span></div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Flux</a></li>
+            <li><a href="search.html">Rechercher</a></li>
+            <li>
+                <a href="chat-list.html">
+                    Messages <span id="msgBadge" class="badge hidden">0</span>
+                </a>
+            </li>
+            <li><a href="events.html">Événements</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="profile.html">Profil</a></li>
+            <li><a href="about.html">À Propos</a></li>
+            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <main class="groups-page layout">
+        <section class="card create-group-card">
+            <h2>Créer un groupe</h2>
+            <form id="createGroupForm">
+                <label for="groupName">Nom du groupe</label>
+                <input type="text" id="groupName" name="groupName" placeholder="Ex: Projet L3" required>
+
+                <label for="groupMembers">Membres (séparés par des virgules)</label>
+                <input type="text" id="groupMembers" name="groupMembers" placeholder="email1@example.com, email2@example.com">
+
+                <label for="groupAvatar">Avatar (optionnel)</label>
+                <input type="file" id="groupAvatar" accept="image/*">
+
+                <div class="actions">
+                    <button type="submit" class="btn-primary">Créer le groupe</button>
+                    <a href="chat-list.html" class="btn-secondary">Retour aux discussions</a>
+                </div>
+            </form>
+            <div id="statusMessage" class="status hidden"></div>
+        </section>
+
+        <section class="card groups-list-card">
+            <h3>Mes groupes</h3>
+            <div id="groupsList">Chargement...</div>
+        </section>
+    </main>
+
+    <script src="assets/js/utils/auth.js"></script>
+    <script src="assets/js/config/service-registry.js"></script>
+    <script src="assets/js/utils/ui.js"></script>
+    <script src="assets/js/utils/http-client.js"></script>
+    <script src="assets/js/services/auth.service.js"></script>
+    <script src="assets/js/adapters/groups.adapter.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription | StudNet</title>
+    <link rel="stylesheet" href="assets/css/register.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="register-card">
+            <h1>Rejoindre <span>StudNet</span></h1>
+            <p>Connecte-toi avec ton campus.</p>
+            <form id="registerForm">
+                <div class="row">
+                    <div class="input-group">
+                        <label>Prénom</label>
+                        <input type="text" id="firstname" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Nom</label>
+                        <input type="text" id="lastname" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Filière</label>
+                    <select id="major">
+                        <option value="bms">BMS</option>
+                        <option value="ict">ICT (Informatique)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Email Académique</label>
+                    <input type="email" id="email" pattern="^[A-Za-z0-9._%+-]+@ictuniversity\.edu\.cm$" title="Utilise ton email @ictuniversity.edu.cm" required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="password" minlength="6" pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{6,}$" title="Minimum 6 caracteres avec une majuscule, un chiffre et un symbole" required>
+                </div>
+                <button type="submit" class="btn-reg">Créer mon profil</button>
+            </form>
+            <p class="footer-text">Déjà inscrit ? <a href="index.html">Se connecter</a></p>
+        </div>
+    </div>
+    <script src="assets/js/config/service-registry.js"></script>
+    <script src="assets/js/utils/ui.js"></script>
+    <script src="assets/js/utils/http-client.js"></script>
+    <script src="assets/js/dtos/dtos.js"></script>
+    <script src="assets/js/services/auth.service.js"></script>
+    <script src="assets/js/adapters/register.adapter.js"></script>
+</body>
+</html>
