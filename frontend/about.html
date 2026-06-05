@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos | StudNet</title>
+    <link rel="stylesheet" href="assets/css/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Stud<span>Net</span></div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Flux</a></li>
+            <li><a href="search.html">Rechercher</a></li>
+            <li>
+                <a href="chat-list.html">
+                    Messages <span id="msgBadge" class="badge hidden">0</span>
+                </a>
+            </li>
+            <li><a href="events.html">Événements</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="profile.html">Profil</a></li>
+            <li><a href="about.html" class="active">À Propos</a></li>
+            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>L'innovation au service de l'étudiant</h1>
+            <p>Découvrez l'équipe derrière la plateforme qui révolutionne la collaboration académique.</p>
+        </section>
+
+        <section class="bio-section">
+            <div class="bio-content">
+                <h2>Le Mot des Fondateurs</h2>
+                <div class="bio-card">
+                    <p>
+                        Nous sommes deux étudiants passionnés, actuellement en <strong>3ème année de Génie Logiciel</strong>. 
+                        Ce projet est le fruit de notre volonté de simplifier le quotidien sur le campus.
+                    </p>
+                    <div class="quote-box">
+                        <i class="fas fa-quote-left"></i>
+                        <p>
+                            Moi, <strong>Joseph Junior</strong>, et mon coéquipier <strong>Kouotou Jeff</strong>, 
+                            avons décidé de lancer <strong>StudNet</strong> parce que nous avons constaté que l'entraide 
+                            est souvent freinée par des outils trop complexes ou éparpillés.
+                        </p>
+                    </div>
+                    <p>
+                        Pour répondre à ce défi, nous avons misé sur une architecture <strong>SOA</strong>. 
+                        Notre objectif ? Garantir une plateforme robuste, capable d'évoluer avec les besoins des étudiants.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-rocket icon"></i>
+                <h3>Notre Mission</h3>
+                <p>Centraliser les ressources et dynamiser la vie de campus en temps réel via des services optimisés.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-code icon"></i>
+                <h3>Architecture</h3>
+                <p>Utilisation du pattern <strong>CQRS</strong> pour une séparation nette entre lecture et écriture de données.</p>
+            </div>
+        </div>
+
+        <section class="team-section">
+            <h2>L'équipe de développement</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="avatar-container">
+                        <img src="/assets/images/JEFF PIC.jpg" alt="" class="member-photo">
+                    </div>
+                    <h4>KOUOTOU JEFF LIONEL</h4>
+                    <p class="role">Étudiant L3 - Lead Architect</p>
+                    <div class="socials">
+                        <a href="https://github.com/Jefflionel"><i class="fab fa-github"></i></a>
+                        <a href="www.linkedin.com/in/jeff-lionel-2136212a8
+
+"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="avatar-container">
+                        <img src="/assets/images/devpic.png" alt="[Nom Partenaire]" class="member-photo">
+                    </div>
+                    <h4>JOSEPH JUNIOR MBEY</h4>
+                    <p class="role">Étudiant L3 - Fullstack Dev</p>
+                    <div class="socials">
+                        <a href="https://github.com/jojosh76"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/utils/auth.js"></script>
+    <script src="assets/js/config/service-registry.js"></script>
+    <script src="assets/js/utils/ui.js"></script>
+    <script src="assets/js/utils/http-client.js"></script>
+    <script src="assets/js/services/auth.service.js"></script>
+    <script src="assets/js/adapters/about.adapter.js"></script>
+</body>
+</html>

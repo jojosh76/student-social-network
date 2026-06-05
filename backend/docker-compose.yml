@@ -1,0 +1,125 @@
+services:
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+    volumes:
+      - ../frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - gateway
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: campus-link-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-campus_link}
+      POSTGRES_USER: ${POSTGRES_USER:-campus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-campus}
+    ports:
+      - "55432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-campus} -d ${POSTGRES_DB:-campus_link}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth:
+    build:
+      context: .
+      dockerfile: services/auth/Dockerfile
+    environment:
+      PORT: 5000
+      JWT_SECRET: ${JWT_SECRET:-studnet_secret_key}
+      DATABASE_URL: ${DATABASE_URL:-postgres://campus:campus@postgres:5432/campus_link}
+    ports:
+      - "5100:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  messaging:
+    build:
+      context: .
+      dockerfile: services/messaging/Dockerfile
+    environment:
+      PORT: 5001
+      JWT_SECRET: ${JWT_SECRET:-studnet_secret_key}
+      DATABASE_URL: ${DATABASE_URL:-postgres://campus:campus@postgres:5432/campus_link}
+    ports:
+      - "5101:5001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  content:
+    build:
+      context: .
+      dockerfile: services/content/Dockerfile
+    environment:
+      PORT: 5002
+      DATABASE_URL: ${DATABASE_URL:-postgres://campus:campus@postgres:5432/campus_link}
+    ports:
+      - "5102:5002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  users:
+    build:
+      context: .
+      dockerfile: services/users/Dockerfile
+    environment:
+      PORT: 5003
+      DATABASE_URL: ${DATABASE_URL:-postgres://campus:campus@postgres:5432/campus_link}
+    ports:
+      - "5103:5003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  files:
+    build:
+      context: .
+      dockerfile: services/files/Dockerfile
+    environment:
+      PORT: 5006
+      DATABASE_URL: ${DATABASE_URL:-postgres://campus:campus@postgres:5432/campus_link}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:5106}
+    ports:
+      - "5106:5006"
+    volumes:
+      - file-uploads:/app/services/files/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  gateway:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    environment:
+      PORT: 3000
+      JWT_SECRET: ${JWT_SECRET:-studnet_secret_key}
+      AUTH_SERVICE_URL: http://auth:5000
+      MESSAGING_SERVICE_URL: http://messaging:5001
+      CONTENT_SERVICE_URL: http://content:5002
+      USER_SERVICE_URL: http://users:5003
+      FILE_SERVICE_URL: http://files:5006
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:8088}
+    ports:
+      - "3100:3000"
+    depends_on:
+      - auth
+      - messaging
+      - content
+      - users
+      - files
+
+volumes:
+  postgres-data:
+  file-uploads:
