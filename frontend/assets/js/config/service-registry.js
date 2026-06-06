@@ -1,15 +1,3 @@
-/**
- * ╔══════════════════════════════════════════════════════════════════╗
- * ║           STUDNET — SERVICE REGISTRY (SOA)                       ║
- * ║  Répertoire central de tous les services de la plateforme        ║
- * ║  Pattern : Service Locator / Registry                            ║
- * ╚══════════════════════════════════════════════════════════════════╝
- *
- * Rôle : Source unique de vérité pour les URL de microservices.
- * Tous les adapters et services importent depuis ici.
- * En production, ce fichier peut être alimenté par un consul/etcd.
- */
-
 'use strict';
 
 /**
@@ -83,7 +71,6 @@ function resolveService(serviceName) {
     return descriptor.url;
 }
 
-// Exposé en module ES ou script global selon l'environnement
 if (typeof module !== 'undefined') {
     module.exports = { SERVICE_REGISTRY, resolveService };
 } else {

@@ -1,67 +1,104 @@
 pipeline {
     agent any
-
+    
     environment {
-        COMPOSE_FILE_PATH = 'backend/docker-compose.yml'
+        DOCKER_TAG = "build-${BUILD_NUMBER}"
+        KUBECONFIG = '/etc/rancher/k3s/k3s.yaml'
     }
-
+    
     stages {
-        stage('Validate JavaScript') {
+        stage('Checkout') {
             steps {
-                powershell '''
-                    node --check backend/gateway/server.js
-                    node --check backend/services/auth/server.js
-                    node --check backend/services/users/server.js
-                    node --check backend/services/content/server.js
-                    node --check backend/services/messaging/server.js
-                    node --check backend/services/files/server.js
-                    node --check frontend/assets/js/adapters/dashboard.adapter.js
-                    node --check frontend/assets/js/adapters/events.adapter.js
-                    node --check frontend/assets/js/adapters/profile.adapter.js
-                    node --check frontend/assets/js/adapters/notifications.adapter.js
-                    node --check frontend/assets/js/adapters/search.adapter.js
-                    node --check frontend/assets/js/adapters/chat-list.adapter.js
-                    node --check frontend/assets/js/adapters/chat.adapter.js
-                    node --check frontend/assets/js/services/domain-services.js
-                    node --check frontend/assets/js/services/chat.service.js
-                    node --check frontend/assets/js/dtos/dtos.js
-                '''
+                checkout scm
             }
         }
-
-        stage('Validate Compose') {
+        
+        stage('Build All Images') {
             steps {
-                dir('backend') {
-                    powershell 'docker compose config'
-                }
-            }
-        }
-
-        stage('Build Images') {
-            steps {
-                dir('backend') {
-                    powershell 'docker compose build'
-                }
-            }
-        }
-
-        stage('Smoke Test') {
-            steps {
-                dir('backend') {
-                    powershell '''
-                        docker compose up -d
-                        Start-Sleep -Seconds 20
-                        ./scripts/smoke-test.ps1
-                    '''
-                }
-            }
-            post {
-                always {
-                    dir('backend') {
-                        powershell 'docker compose down'
+                script {
+                    // Build frontend (context: frontend/)
+                    sh "docker build -t jefflionel40/campuslink-frontend:${DOCKER_TAG} -f frontend/Dockerfile frontend/"
+                    sh "docker tag jefflionel40/campuslink-frontend:${DOCKER_TAG} jefflionel40/campuslink-frontend:latest"
+                    
+                    // Build gateway (context: backend/)
+                    sh "docker build -t jefflionel40/campuslink-gateway:${DOCKER_TAG} -f backend/gateway/Dockerfile backend/"
+                    sh "docker tag jefflionel40/campuslink-gateway:${DOCKER_TAG} jefflionel40/campuslink-gateway:latest"
+                    
+                    // Build backend services (context: backend/ for all)
+                    def services = [
+                        [name: 'auth', dockerfile: 'backend/services/auth/Dockerfile'],
+                        [name: 'users', dockerfile: 'backend/services/users/Dockerfile'],
+                        [name: 'content', dockerfile: 'backend/services/content/Dockerfile'],
+                        [name: 'messaging', dockerfile: 'backend/services/messaging/Dockerfile'],
+                        [name: 'files', dockerfile: 'backend/services/files/Dockerfile']
+                    ]
+                    
+                    services.each { svc ->
+                        echo "Building ${svc.name}..."
+                        sh "docker build -t jefflionel40/campuslink-${svc.name}:${DOCKER_TAG} -f ${svc.dockerfile} backend/"
+                        sh "docker tag jefflionel40/campuslink-${svc.name}:${DOCKER_TAG} jefflionel40/campuslink-${svc.name}:latest"
                     }
                 }
             }
+        }
+        
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    
+                    script {
+                        def images = ['frontend', 'gateway', 'auth', 'users', 'content', 'messaging', 'files']
+                        images.each { img ->
+                            sh "docker push jefflionel40/campuslink-${img}:${DOCKER_TAG}"
+                            sh "docker push jefflionel40/campuslink-${img}:latest"
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy to K3s') {
+            steps {
+                sh '''
+                    kubectl apply -f k8s/
+                    
+                    kubectl set image deployment/campuslink-frontend frontend=jefflionel40/campuslink-frontend:${DOCKER_TAG}
+                    kubectl set image deployment/campuslink-gateway gateway=jefflionel40/campuslink-gateway:${DOCKER_TAG}
+                    kubectl set image deployment/campuslink-auth auth=jefflionel40/campuslink-auth:${DOCKER_TAG}
+                    kubectl set image deployment/campuslink-users users=jefflionel40/campuslink-users:${DOCKER_TAG}
+                    kubectl set image deployment/campuslink-content content=jefflionel40/campuslink-content:${DOCKER_TAG}
+                    kubectl set image deployment/campuslink-messaging messaging=jefflionel40/campuslink-messaging:${DOCKER_TAG}
+                    kubectl set image deployment/campuslink-files files=jefflionel40/campuslink-files:${DOCKER_TAG}
+                    
+                    kubectl rollout status deployment/campuslink-frontend --timeout=120s
+                    kubectl rollout status deployment/campuslink-gateway --timeout=120s
+                    kubectl rollout status deployment/campuslink-auth --timeout=120s
+                '''
+            }
+        }
+        
+        stage('Smoke Test') {
+            steps {
+                sh '''
+                    sleep 15
+                    kubectl get pods
+                    kubectl run smoke-test --rm -i --restart=Never --image=curlimages/curl -- curl -f http://campuslink-gateway:3000/health
+                '''
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo '✅ Full CI/CD pipeline completed successfully!'
+        }
+        failure {
+            echo '❌ Pipeline failed! Check logs above.'
+        }
+        always {
+            sh 'docker logout || true'
+            sh 'docker system prune -f || true'
         }
     }
 }

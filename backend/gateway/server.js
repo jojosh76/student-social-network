@@ -43,6 +43,7 @@ const { Server: SocketServer } = require('socket.io');
 const { io: SocketClient }    = require('socket.io-client');
 
 const app    = express();
+app.set('trust proxy', 1);
 const server = createServer(app);
 
 // ── CONFIG ─────────────────────────────────────────────────────────────────────
