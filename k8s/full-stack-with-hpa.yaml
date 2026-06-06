@@ -78,7 +78,7 @@ spec:
       - name: auth
         image: jefflionel40/campuslink-auth:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 5100
         resources:
           requests:
             cpu: "250m"
@@ -127,7 +127,7 @@ spec:
       - name: messaging
         image: jefflionel40/campuslink-messaging:latest
         ports:
-        - containerPort: 5001
+        - containerPort: 5101
         resources:
           requests:
             cpu: "250m"

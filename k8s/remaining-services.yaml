@@ -17,7 +17,7 @@ spec:
       - name: content
         image: jefflionel40/campuslink-content:latest
         ports:
-        - containerPort: 5002
+        - containerPort: 5102
         resources:
           requests:
             cpu: "250m"
@@ -66,7 +66,7 @@ spec:
       - name: users
         image: jefflionel40/campuslink-users:latest
         ports:
-        - containerPort: 5003
+        - containerPort: 5103
         resources:
           requests:
             cpu: "200m"
@@ -115,7 +115,7 @@ spec:
       - name: files
         image: jefflionel40/campuslink-files:latest
         ports:
-        - containerPort: 5006
+        - containerPort: 5106
         resources:
           requests:
             cpu: "200m"
