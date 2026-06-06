@@ -16,26 +16,26 @@ pipeline {
         stage('Build All Images') {
             steps {
                 script {
-                    // Build frontend
+                    // Build frontend (context: frontend/)
                     sh "docker build -t jefflionel40/campuslink-frontend:${DOCKER_TAG} -f frontend/Dockerfile frontend/"
                     sh "docker tag jefflionel40/campuslink-frontend:${DOCKER_TAG} jefflionel40/campuslink-frontend:latest"
                     
-                    // Build gateway
+                    // Build gateway (context: backend/)
                     sh "docker build -t jefflionel40/campuslink-gateway:${DOCKER_TAG} -f backend/gateway/Dockerfile backend/"
                     sh "docker tag jefflionel40/campuslink-gateway:${DOCKER_TAG} jefflionel40/campuslink-gateway:latest"
                     
-                    // Build backend services
+                    // Build backend services (context: backend/ for all)
                     def services = [
-                        [name: 'auth', dockerfile: 'backend/services/auth/Dockerfile', context: 'backend/services/auth'],
-                        [name: 'users', dockerfile: 'backend/services/users/Dockerfile', context: 'backend/services/users'],
-                        [name: 'content', dockerfile: 'backend/services/content/Dockerfile', context: 'backend/services/content'],
-                        [name: 'messaging', dockerfile: 'backend/services/messaging/Dockerfile', context: 'backend/services/messaging'],
-                        [name: 'files', dockerfile: 'backend/services/files/Dockerfile', context: 'backend/services/files']
+                        [name: 'auth', dockerfile: 'backend/services/auth/Dockerfile'],
+                        [name: 'users', dockerfile: 'backend/services/users/Dockerfile'],
+                        [name: 'content', dockerfile: 'backend/services/content/Dockerfile'],
+                        [name: 'messaging', dockerfile: 'backend/services/messaging/Dockerfile'],
+                        [name: 'files', dockerfile: 'backend/services/files/Dockerfile']
                     ]
                     
                     services.each { svc ->
                         echo "Building ${svc.name}..."
-                        sh "docker build -t jefflionel40/campuslink-${svc.name}:${DOCKER_TAG} -f ${svc.dockerfile} ${svc.context}"
+                        sh "docker build -t jefflionel40/campuslink-${svc.name}:${DOCKER_TAG} -f ${svc.dockerfile} backend/"
                         sh "docker tag jefflionel40/campuslink-${svc.name}:${DOCKER_TAG} jefflionel40/campuslink-${svc.name}:latest"
                     }
                 }
