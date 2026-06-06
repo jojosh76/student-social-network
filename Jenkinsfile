@@ -72,7 +72,7 @@ pipeline {
                     kubectl set image deployment/campuslink-files files=jefflionel40/campuslink-files:${DOCKER_TAG}
                     
                     kubectl rollout status deployment/campuslink-frontend --timeout=120s
-                    kubectl rollout status deployment/campuslink-gateway --timeout=120s
+                    kubectl rollout status deployment/campuslink-gateway --timeout=300s
                     kubectl rollout status deployment/campuslink-auth --timeout=120s
                 '''
             }
