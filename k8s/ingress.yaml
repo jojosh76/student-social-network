@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: campuslink-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  rules:
+  - http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: campuslink-gateway
+            port:
+              number: 3100
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-frontend
+            port:
+              number: 80

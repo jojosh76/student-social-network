@@ -1,0 +1,146 @@
+# ================== CONTENT SERVICE ==================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campuslink-content
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campuslink-content
+  template:
+    metadata:
+      labels:
+        app: campuslink-content
+    spec:
+      containers:
+      - name: content
+        image: jefflionel40/campuslink-content:latest
+        ports:
+        - containerPort: 5002
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "350Mi"
+          limits:
+            cpu: "600m"
+            memory: "700Mi"
+        imagePullPolicy: Always
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: campuslink-content-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: campuslink-content
+  minReplicas: 1
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+
+# ================== USERS SERVICE ==================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campuslink-users
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campuslink-users
+  template:
+    metadata:
+      labels:
+        app: campuslink-users
+    spec:
+      containers:
+      - name: users
+        image: jefflionel40/campuslink-users:latest
+        ports:
+        - containerPort: 5003
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "300Mi"
+          limits:
+            cpu: "500m"
+            memory: "600Mi"
+        imagePullPolicy: Always
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: campuslink-users-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: campuslink-users
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+
+# ================== FILES SERVICE ==================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campuslink-files
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campuslink-files
+  template:
+    metadata:
+      labels:
+        app: campuslink-files
+    spec:
+      containers:
+      - name: files
+        image: jefflionel40/campuslink-files:latest
+        ports:
+        - containerPort: 5006
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "400Mi"
+          limits:
+            cpu: "400m"
+            memory: "800Mi"
+        imagePullPolicy: Always
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: campuslink-files-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: campuslink-files
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campuslink-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: campuslink-gateway
+  template:
+    metadata:
+      labels:
+        app: campuslink-gateway
+    spec:
+      containers:
+      - name: gateway
+        image: jefflionel40/campuslink-gateway:latest
+        ports:
+        - containerPort: 3100
+        resources:
+          requests:
+            cpu: "300m"
+            memory: "400Mi"
+          limits:
+            cpu: "600m"
+            memory: "800Mi"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: campuslink-gateway
+spec:
+  selector:
+    app: campuslink-gateway
+  ports:
+  - port: 3100
+    targetPort: 3100
+  type: ClusterIP

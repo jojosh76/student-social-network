@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campuslink-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campuslink-postgres
+  template:
+    metadata:
+      labels:
+        app: campuslink-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "campus_prod"
+        - name: POSTGRES_PASSWORD
+          value: "tq1pK-Rw1zXdyL6KUv33huCTwr2wVtSYztmE8k9cDx0"
+        - name: POSTGRES_DB
+          value: "campus_link"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: campuslink-postgres
+spec:
+  selector:
+    app: campuslink-postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP

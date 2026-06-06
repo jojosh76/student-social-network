@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campuslink-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campuslink-frontend
+  template:
+    metadata:
+      labels:
+        app: campuslink-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: jefflionel40/campuslink-frontend:latest
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-frontend
+spec:
+  selector:
+    app: campuslink-frontend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
