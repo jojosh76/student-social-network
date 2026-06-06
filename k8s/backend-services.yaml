@@ -19,8 +19,8 @@ spec:
   selector:
     app: campuslink-messaging
   ports:
-  - port: 5001
-    targetPort: 5001
+  - port: 5101
+    targetPort: 5101
   type: ClusterIP
 
 ---
@@ -32,8 +32,8 @@ spec:
   selector:
     app: campuslink-content
   ports:
-  - port: 5002
-    targetPort: 5002
+  - port: 5102
+    targetPort: 5102
   type: ClusterIP
 
 ---
@@ -45,8 +45,8 @@ spec:
   selector:
     app: campuslink-users
   ports:
-  - port: 5003
-    targetPort: 5003
+  - port: 5103
+    targetPort: 5103
   type: ClusterIP
 
 ---
@@ -58,6 +58,6 @@ spec:
   selector:
     app: campuslink-files
   ports:
-  - port: 5006
-    targetPort: 5006
+  - port: 5106
+    targetPort: 5106
   type: ClusterIP
