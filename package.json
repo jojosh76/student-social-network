@@ -2,14 +2,8 @@
   "name": "student-social-network-root",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "backend",
-  ],
   "scripts": {
-    "install-all": "npm install",
-    "test-all": "npm test --workspaces -- --coverage"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0"
+    "install-all": "npm install --prefix backend",
+    "test-all": "npm test --prefix backend -- --coverage --watchAll=false"
   }
 }
