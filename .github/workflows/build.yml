@@ -12,24 +12,24 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Désactive le clone superficiel pour une meilleure analyse
 
-      # 1. Configurer Node.js
+      # 1. Installer Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Mettez la version de Node que vous utilisez
+          node-version: '20' # Installe Node.js version 20
 
-      # 2. Installer les dépendances du projet
+      # 2. Installer les dépendances de votre projet Express (node_modules)
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # 3. Exécuter les tests et générer le rapport de couverture (coverage)
+      # 3. Lancer les tests et générer le rapport de couverture
       - name: Run tests with coverage
         run: npm test -- --coverage --watchAll=false
-        # Note : Si vous utilisez Vitest ou un autre outil, remplacez par votre commande (ex: npx vitest run --coverage)
+        # Note : Si vous utilisez un autre outil que Jest, assurez-vous que votre script "npm test" génère bien un dossier "coverage"
 
-      # 4. Scanner avec SonarQube (qui va maintenant trouver le rapport de test)
+      # 4. Scanner avec SonarQube
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
         env:
