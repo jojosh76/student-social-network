@@ -19,19 +19,14 @@ jobs:
         with:
           node-version: '20'
 
-      # 1. On va dans backend pour installer express et jest
-      - name: Install dependencies
-        run: |
-          cd backend
-          npm install
+      # Installe Jest à la racine
+      - name: Install root dependencies
+        run: npm install
 
-      # 2. On va dans backend pour lancer le test et générer le dossier coverage
-      - name: Run all tests with coverage
-        run: |
-          cd backend
-          npm test -- --coverage --watchAll=false
+      # Lance le script de test global
+      - name: Run fake coverage test
+        run: npm run test-all
 
-      # 3. Scan SonarQube
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
         env:
