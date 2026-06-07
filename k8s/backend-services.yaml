@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-auth
 spec:
   selector:
@@ -14,6 +15,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-messaging
 spec:
   selector:
@@ -27,6 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-content
 spec:
   selector:
@@ -40,6 +43,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-users
 spec:
   selector:
@@ -53,6 +57,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-files
 spec:
   selector:

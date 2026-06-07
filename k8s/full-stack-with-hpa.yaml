@@ -2,14 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: campuslink-gateway
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: campuslink-gateway
   template:
     metadata:
+  namespace: default
       labels:
         app: campuslink-gateway
     spec:
@@ -31,6 +33,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-gateway
 spec:
   selector:
@@ -43,6 +46,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: default
   name: campuslink-gateway-hpa
 spec:
   scaleTargetRef:
@@ -63,14 +67,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: campuslink-auth
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: campuslink-auth
   template:
     metadata:
+  namespace: default
       labels:
         app: campuslink-auth
     spec:
@@ -92,6 +98,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: default
   name: campuslink-auth-hpa
 spec:
   scaleTargetRef:
@@ -112,14 +119,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: campuslink-messaging
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: campuslink-messaging
   template:
     metadata:
+  namespace: default
       labels:
         app: campuslink-messaging
     spec:
@@ -141,6 +150,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: default
   name: campuslink-messaging-hpa
 spec:
   scaleTargetRef:

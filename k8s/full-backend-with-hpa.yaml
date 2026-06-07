@@ -2,6 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: campuslink-gateway
 spec:
   replicas: 1
@@ -10,6 +11,7 @@ spec:
       app: campuslink-gateway
   template:
     metadata:
+  namespace: default
       labels:
         app: campuslink-gateway
     spec:
@@ -31,6 +33,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   name: campuslink-gateway
 spec:
   selector:
@@ -44,6 +47,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: default
   name: campuslink-gateway-hpa
 spec:
   scaleTargetRef:
