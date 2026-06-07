@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: default
   name: campuslink-frontend
 spec:
   replicas: 1
@@ -10,7 +9,6 @@ spec:
       app: campuslink-frontend
   template:
     metadata:
-  namespace: default
       labels:
         app: campuslink-frontend
     spec:
@@ -24,7 +22,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: default
   name: backend-frontend
 spec:
   selector:
