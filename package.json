@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install-all": "cd backend && npm install",
-    "test-all": "cd backend && npm test -- --coverage --watchAll=false"
+    "install-all": "npm install",
+    "test-all": "jest --coverage --watchAll=false"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
