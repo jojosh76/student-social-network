@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install-all": "npm install --prefix backend",
-    "test-all": "npm test --prefix backend -- --coverage --watchAll=false"
+    "install-all": "cd backend && npm install",
+    "test-all": "cd backend && npm test -- --coverage --watchAll=false"
   }
 }
