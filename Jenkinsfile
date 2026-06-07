@@ -83,7 +83,7 @@ pipeline {
                 sh '''
                     sleep 15
                     kubectl get pods
-                    kubectl run smoke-test --rm -i --restart=Never --image=curlimages/curl -- curl -f http://campuslink-gateway:3000/health
+                    kubectl run smoke-test --rm -i --restart=Never --image=curlimages/curl -- curl -f http://campuslink-gateway:3100/health
                 '''
             }
         }
