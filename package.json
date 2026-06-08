@@ -1,0 +1,12 @@
+{
+  "name": "student-social-network-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install",
+    "test-all": "jest --coverage --watchAll=false"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
