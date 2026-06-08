@@ -63,7 +63,7 @@ const SERVICE_REGISTRY = {
     },
     chat: {
         url:     'ws://164.92.198.226',
-        wsPath:  '/chat',
+        wsPath:  '/socket.io',
         version: 'v1',
         routes:  ['WS /chat'],
     },

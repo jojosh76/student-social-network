@@ -16,6 +16,20 @@ spec:
             name: campuslink-gateway
             port:
               number: 3100
+      - path: /socket.io
+        pathType: Prefix
+        backend:
+          service:
+            name: campuslink-gateway
+            port:
+              number: 3100
+      - path: /files
+        pathType: Prefix
+        backend:
+          service:
+            name: campuslink-files
+            port:
+              number: 5106
       - path: /
         pathType: Prefix
         backend:
