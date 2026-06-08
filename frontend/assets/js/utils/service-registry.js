@@ -62,7 +62,7 @@ const SERVICE_REGISTRY = {
         routes:  ['POST /'],
     },
     chat: {
-        url:     'http://164.92.198.226',
+        url:     'ws://164.92.198.226',
         wsPath:  '/chat',
         version: 'v1',
         routes:  ['WS /chat'],
