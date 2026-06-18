@@ -94,6 +94,22 @@ const authLimiter = rateLimit({
 app.use('/api/auth/login',    authLimiter);
 app.use('/api/auth/register', authLimiter);
 
+// Extract user from JWT without blocking requests
+app.use((req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    if (authHeader?.startsWith('Bearer ')) {
+        try {
+            const decoded = jwt.verify(authHeader.split(' ')[1], JWT_SECRET);
+            req.headers['x-user-id']    = decoded.id;
+            req.headers['x-user-email'] = decoded.email;
+            req.headers['x-user-role']  = decoded.role || 'student';
+        } catch {
+            // Invalid token — don't block, just don't set headers
+        }
+    }
+    next();
+});
+
 // ── HEALTH CHECK ───────────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => res.json({
     gateway: 'StudNet API Gateway', status: 'UP',
