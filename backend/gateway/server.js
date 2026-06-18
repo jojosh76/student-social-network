@@ -106,18 +106,6 @@ app.get('/health', (_req, res) => res.json({
  * Si valide, injecte req.user et les headers internes X-User-*
  * pour que les microservices n'aient pas à re-vérifier le token.
  */
-function authGuard(req, res, next) {
-    if (req.path.startsWith('/socket.io')) return next();
-
-    const isPublic = PUBLIC_ROUTES.some(
-        r => r.method === req.method && req.path.startsWith(r.path)
-    );
-    if (isPublic) return next();
-
-    const authHeader = req.headers['authorization'];
-    if (!authHeader?.startsWith('Bearer ')) {
-        return res.status(401).json({ error: 'Token manquant. Veuillez vous connecter.' });
-    }
 
     try {
         const decoded = jwt.verify(authHeader.split(' ')[1], JWT_SECRET);
@@ -134,7 +122,6 @@ function authGuard(req, res, next) {
         return res.status(403).json({ error: 'Token invalide.' });
     }
 }
-app.use(authGuard);
 
 // ── FACTORY DE PROXY ──────────────────────────────────────────────────────────
 /**
@@ -186,7 +173,7 @@ app.use('/api/upload',        mountedProxy(SERVICES.files, '', { selfHandleRespo
  */
 const io = new SocketServer(server, {
     cors   : { origin: process.env.FRONTEND_URL || 'http://localhost:8080', methods: ['GET', 'POST'] },
-    path   : '/socket.io',
+    path   : '/chat',
 });
 
 // Auth Guard WebSocket
@@ -206,7 +193,7 @@ io.on('connection', (clientSocket) => {
     console.log(`[Gateway WS] Connecté : ${email} (${userId})`);
 
     // Connexion vers ChatService avec identité injectée
-    const chatSocket = SocketClient(SERVICES.messaging.replace('http://', 'ws://'), {
+    const chatSocket = SocketClient(SERVICES.messaging, {
         auth      : { userId, email },
         transports: ['websocket'],
     });
