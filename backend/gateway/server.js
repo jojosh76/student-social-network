@@ -107,6 +107,8 @@ app.get('/health', (_req, res) => res.json({
  * pour que les microservices n'aient pas à re-vérifier le token.
  */
 function authGuard(req, res, next) {
+    if (req.path.startsWith('/socket.io')) return next();
+
     const isPublic = PUBLIC_ROUTES.some(
         r => r.method === req.method && req.path.startsWith(r.path)
     );
@@ -204,7 +206,7 @@ io.on('connection', (clientSocket) => {
     console.log(`[Gateway WS] Connecté : ${email} (${userId})`);
 
     // Connexion vers ChatService avec identité injectée
-    const chatSocket = SocketClient(SERVICES.messaging, {
+    const chatSocket = SocketClient(SERVICES.messaging.replace('http://', 'ws://'), {
         auth      : { userId, email },
         transports: ['websocket'],
     });
