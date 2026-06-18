@@ -100,28 +100,6 @@ app.get('/health', (_req, res) => res.json({
     uptime:  process.uptime(), services: Object.keys(SERVICES),
 }));
 
-// ── AUTH GUARD CENTRALISÉ (SOA Security Policy) ───────────────────────────────
-/**
- * Vérifie le JWT Bearer sur toutes les routes protégées.
- * Si valide, injecte req.user et les headers internes X-User-*
- * pour que les microservices n'aient pas à re-vérifier le token.
- */
-
-    try {
-        const decoded = jwt.verify(authHeader.split(' ')[1], JWT_SECRET);
-        req.user = decoded;
-        // Propagation de l'identité vers les microservices (headers internes)
-        req.headers['x-user-id']    = decoded.id;
-        req.headers['x-user-email'] = decoded.email;
-        req.headers['x-user-role']  = decoded.role || 'student';
-        next();
-    } catch (err) {
-        if (err.name === 'TokenExpiredError') {
-            return res.status(401).json({ error: 'Session expirée. Veuillez vous reconnecter.' });
-        }
-        return res.status(403).json({ error: 'Token invalide.' });
-    }
-}
 
 // ── FACTORY DE PROXY ──────────────────────────────────────────────────────────
 /**
