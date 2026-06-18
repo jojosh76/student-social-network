@@ -173,7 +173,7 @@ app.use('/api/upload',        mountedProxy(SERVICES.files, '', { selfHandleRespo
  */
 const io = new SocketServer(server, {
     cors   : { origin: process.env.FRONTEND_URL || 'http://localhost:8080', methods: ['GET', 'POST'] },
-    path   : '/chat',
+    path   : '/socket.io',
 });
 
 // Auth Guard WebSocket
@@ -193,7 +193,7 @@ io.on('connection', (clientSocket) => {
     console.log(`[Gateway WS] Connecté : ${email} (${userId})`);
 
     // Connexion vers ChatService avec identité injectée
-    const chatSocket = SocketClient(SERVICES.messaging, {
+    const chatSocket = SocketClient(SERVICES.messaging.replace('http://', 'ws://'), {
         auth      : { userId, email },
         transports: ['websocket'],
     });
